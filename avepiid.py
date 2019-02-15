@@ -7,8 +7,9 @@ from nltk.tag.stanford import StanfordNERTagger
 
 class DetectPII():
     
-    def __init__(self,text):
+    def __init__(self,text,debug):
         
+        self.debug = debug
         self.text = text
         self.preProcess()
         self.spacy_pi = self.spacyDetection()
@@ -47,7 +48,9 @@ class DetectPII():
         classified_text = st.tag(self.text)
         
         #grouping personal information
-        print('\n--- PII DETECTION ---\n')
+        if self.debug : 
+            print('\n--- PII DETECTION ---\n')
+            
         stan_pi = [tags[0] for tags in classified_text if tags[1] == 'PERSON' 
                 or tags[1] == 'DATE' or tags[1] == 'ORGANIZATION' 
                 or tags[1] == 'LOCATION' or tags[1] == 'PERCENT'
