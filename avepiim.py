@@ -4,7 +4,8 @@ import matplotlib.pyplot as plt
 import PIL.ImageOps  
 
 class MarkPII():
-    def __init__(self,image,info,word_boxes):
+    def __init__(self,image,info,word_boxes,debug):
+        self.debug = debug
         self.info = info
         self.image = image
         self.word_boxes = word_boxes
@@ -27,15 +28,18 @@ class MarkPII():
                                    (int(c[0][0]),int(c[0][1])),
                                    (int(c[1][0]),int(c[1][1])),
                                    (0,0,0), -1)
-        print('IMAGE AFTER DE-INTIFYING PII')
-        plt.imshow(rotated,'gray')
-        plt.show()
+        
+        if self.debug:
+            print('IMAGE AFTER DE-INTIFYING PII')
+            plt.imshow(rotated,'gray')
+            plt.show()
         Image.fromarray(rotated).save(self.image)
         
     def invert(self):
         #inverting 
         inverted_image = PIL.ImageOps.invert(Image.open(self.image))
-        print('--- FINAL IMAGE ---')
-        plt.imshow(inverted_image,'gray')
-        plt.show()
+        if self.debug:
+            print('--- FINAL IMAGE ---')
+            plt.imshow(inverted_image,'gray')
+            plt.show()
         inverted_image.save(self.image)
