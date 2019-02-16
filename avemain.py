@@ -19,7 +19,7 @@ class IdentifyPI():
         self.modified = self.path + '/modified/'
         self.source_name = os.path.basename(source)
         self.name, self.extension = self.source_name.split('.')
-        self.im_name = datetime.datetime.now().strftime("%m-%d-%Y-%H-%M-%S")
+        self.im_name = datetime.datetime.now().strftime("%m-%d-%Y-%H-%M-%S")   
         Image.open(source).save(self.modified + self.im_name + '.'+self.extension)
         self.image = self.modified+self.im_name+'.'+ self.extension
         
@@ -39,5 +39,3 @@ class IdentifyPI():
         return self.info
     def retPath(self):
         return self.image
-
-

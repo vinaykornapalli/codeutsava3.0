@@ -4,12 +4,14 @@ import numpy as np
 import en_core_web_sm
 from nltk.corpus import stopwords
 from nltk.tag.stanford import StanfordNERTagger
-import os
+from nltk.corpus import wordnet
 
 class DetectPII():
     
     def __init__(self,text,debug):
-        
+       
+        with open('medical_terms.txt', 'r') as myfile:
+             self.data=myfile.read()
         self.debug = debug
         self.text = text
         self.preProcess()
@@ -17,10 +19,19 @@ class DetectPII():
         self.al_pi = self.alphanumDetection()
         self.stan_pi = self.stanfordDetection()
         self.em_pi = self.emailDetection()
-        self.info = np.array([self.spacy_pi,self.al_pi,self.stan_pi,self.em_pi])
+        self.cur_pi = self.currencyDetection()
+        self.info = np.array([self.spacy_pi,self.al_pi,self.stan_pi,self.em_pi,self.cur_pi])
         self.info = np.hstack(self.info)
         self.info = [re.sub('[\']', '', inf) for inf in self.info]
-        
+        for f in self.info :
+            if f.isupper() :
+                if wordnet.synsets(f):
+                   self.info = [inf for inf in self.info if inf!=f]
+        for f in self.info : 
+            if f in self.data :
+               self.info = [inf for inf in self.info if inf!=f] 
+                                
+               
     #stopword removal
     def preProcess(self):
         self.text = [word for word in self.text if not 
@@ -53,15 +64,30 @@ class DetectPII():
             print('\n--- PII DETECTION ---\n')
             
         stan_pi = [tags[0] for tags in classified_text if tags[1] == 'PERSON' 
-                or tags[1] == 'DATE' or tags[1] == 'ORGANIZATION' 
+                or tags[1] == 'DATE' 
                 or tags[1] == 'LOCATION' or tags[1] == 'PERCENT'
                 or tags[1] == 'MONEY' or tags[1] == 'TIME']
+        
         return stan_pi
+    
     
     #email detection
     def emailDetection(self):
         em_pi = [mail for mail in self.text if '@' in mail]
         return em_pi
+    
+    def currencyDetection(self):
+        cur_pi = []
+        for curr in self.text:
+            for c in curr:
+                if c in "¥$€£₹" :
+                    cur_pi.append(curr)
+        if cur_pi : 
+           np.hstack(cur_pi)
+        
+        return cur_pi
+    
+    
     
     def retInfo(self):
         return self.info
