@@ -38,8 +38,9 @@ def imageupload():
     if request.method == 'POST':
         data = request.data
         dataDict = json.loads(data)
-        toBase64(dataDict['name'] , dataDict['image'])
-    response=jsonify({'req' : 'a' })
+        image_path = toBase64(dataDict['name'] , dataDict['image'])
+        modified_image_path = here_comes_magic(image_path)
+        response=jsonify({'path' : modified_image_path })
     return response
 
 
@@ -54,7 +55,7 @@ def toBase64(filename , codec):
     return image_path
 
 def here_comes_magic(image_path):
-    IdentifyPI(image_path)
+    return IdentifyPI(image_path).retPath()
 
 if __name__ == '__main__' :
     PORT = int(os.environ.get('PORT' , 5000))

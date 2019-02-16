@@ -6,8 +6,8 @@ from PIL import Image
 
 
 class DetectText():
-    def __init__(self,image):
-        
+    def __init__(self,image,debug):
+        self.debug = debug
         self.image = image
         self.text = []
         self.word_boxes = []
@@ -16,13 +16,16 @@ class DetectText():
         if len(self.tools) == 0:
             print("No OCR tool found")
         self.tool = self.tools[0]
-        print("Will use tool '%s'" % (self.tool.get_name()))
+        if self.debug : 
+            print("Will use tool '%s'" % (self.tool.get_name()))
         
         #checking available languages
         self.langs = self.tool.get_available_languages()
-        print("Available languages: %s" % ", ".join(self.langs))
+        if self.debug :
+            print("Available languages: %s" % ", ".join(self.langs))
         self.lang = self.langs[0]
-        print("Will use lang '%s'" % (self.lang))
+        if self.debug:
+            print("Will use lang '%s'" % (self.lang))
         
         #word boxes detection
         self.word_boxes = self.tool.image_to_string(
