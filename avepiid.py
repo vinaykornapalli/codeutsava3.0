@@ -5,6 +5,7 @@ import en_core_web_sm
 from nltk.corpus import stopwords
 from nltk.tag.stanford import StanfordNERTagger
 from nltk.corpus import wordnet
+import os
 
 class DetectPII():
     
