@@ -1,8 +1,5 @@
-<<<<<<< HEAD
-/stanford-ner
-/venv
-
-=======
 /stanford_ner
 /venv
->>>>>>> 346ee57291dedde4131c08cd5f9b45db61c17525
+/uploads
+/modified
+/front/node_modules

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>OCR model</h1>
+
+    <input type="file" id="image" value="Please upload the Image" onchange="filePreview()">
+    <button id="submit">Submit</button>
+    <br>
+    <hr>
+    <img src="" id="preview"  style="width:300px ; height:300px" alt="Not uploaded yet">
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        let button = document.getElementById("submit");
+        button.addEventListener('click', () => {
+            let img = document.getElementById("image").files[0];
+            // let data = img.toDataUrl();
+            console.log(data);  
+        })
+
+        //file preview
+
+        function filePreview() {
+            let img = document.getElementById("image").files[0];
+            var preview = document.getElementById("preview");
+            var reader = new FileReader();
+            reader.addEventListener('load', function () {
+                preview.src = reader.result;
+            })
+            if (img) {
+                reader.readAsDataURL(img);
+            }
+        }
+    </script>
+</body>
+
+</html>

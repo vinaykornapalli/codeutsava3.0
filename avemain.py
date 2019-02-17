@@ -6,12 +6,14 @@ from aveimagepre import PreProcess
 from avetextd import  DetectText
 from avepiid import DetectPII
 from avepiim import MarkPII
-
-
+import os
+path = os.path.dirname(__file__)
+uploads = path + 'uploads/'
+modified = path + 'modified/'
 
 class IdentifyPI():
     
-    def __init__(self,source,debug):
+    def __init__(self,source,debug=False, arr=None):
         self.debug = debug
         self.path =  os.path.dirname(os.path.realpath('__file__'))
         self.modified = self.path + '/modified/'
@@ -27,6 +29,11 @@ class IdentifyPI():
         self.word_boxes = det.retBox()
         inf = DetectPII(self.text,self.debug)
         self.info = inf.retInfo()
+        if arr == None:
+            pass
+        else:
+            for f in arr:
+                self.info = [x for x in self.info if x!=f]
         MarkPII(self.image,self.info,self.word_boxes,self.debug)
         self.retPath()
         

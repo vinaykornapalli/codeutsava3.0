@@ -5,6 +5,7 @@ import en_core_web_sm
 from nltk.corpus import stopwords
 from nltk.tag.stanford import StanfordNERTagger
 from nltk.corpus import wordnet
+import os
 
 class DetectPII():
     
@@ -53,9 +54,9 @@ class DetectPII():
     #stanford detection
     def stanfordDetection(self):
         #tagging
-        path = '/home/nikhila/Desktop/avepii/stanford-ner'
-        jar = path + '/stanford-ner.jar'
-        model = path + '/classifiers/english.muc.7class.distsim.crf.ser.gz'
+        path = os.path.dirname(__file__)
+        jar = path + '/stanford_ner/stanford-ner.jar'
+        model = path + '/stanford_ner/classifiers/english.muc.7class.distsim.crf.ser.gz'
         st = StanfordNERTagger(model,jar)
         classified_text = st.tag(self.text)
         
