@@ -12,6 +12,12 @@ Woo-Hoo!! Ours is a saviour for Hospitals and analytical companies working on me
 
 ### Rest and Library API
 This API can be used to block personal Info on Images by Accessing our Rest API.The user should just give input image and he will get image with text blocked as Output.
+1.Clone the repo
+2.Create a virtual Environment
+3.for REST API Run ```python3 app.py```
+4.for Library API Run 
+```python3 avemain.py
+```
 
 ### Debug Mode
 It provides a debug feature which displays record status after every sub process of our AI model.
