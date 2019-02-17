@@ -16,6 +16,8 @@ This API can be used to block personal Info on Images by Accessing our Rest API.
 ### Debug Mode
 It provides a debug feature which displays record status after every sub process of our AI model.
 
+### Docker Image
+Cross platform functionality with docker. You can get our docker image from our dockerhub public registry.
 
 
 
